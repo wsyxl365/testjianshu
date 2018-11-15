@@ -12,16 +12,31 @@ import {
 } from "./style";
 import { connect } from "react-redux"; //建立和store的连接
 
-@connect(mapStateToPorps,mapDispathToProps)
-class Header extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            focused: false
-        };
-        this.handleInputFocus = this.handleInputFocus.bind(this);
-        this.handleInputBlur = this.handleInputBlur.bind(this);
+const mapStateToProps = (state) => {
+    return {
+        focused:state.focused
     }
+}
+
+const mapDispathToProps = (dispatch) => {
+    return {
+        handleInputFocus(){
+            const action = {
+                type: 'search_focus'
+            };
+            dispatch(action);
+        },
+        handleInputBlur(){
+            const action = {
+                type: 'search_blur'
+            };
+            dispatch(action);
+        }
+    }
+}
+
+@connect(mapStateToProps,mapDispathToProps)
+class Header extends Component {
     render(){
         return (
             <HeaderWrapper>
@@ -35,17 +50,17 @@ class Header extends Component {
                     </NavItem>
                     <SearchWrapper>
                         <CSSTransition
-                            in={this.state.focused}
+                            in={this.props.focused}
                             timeout={200}
                             classNames="slide"
                         >
                             <NavSearch
-                                className={this.state.focused ? 'focused' : ''}
-                                onFocus={this.handleInputFocus}
-                                onBlur={this.handleInputBlur}
+                                className={this.props.focused ? 'focused' : ''}
+                                onFocus={this.props.handleInputFocus}
+                                onBlur={this.props.handleInputBlur}
                             ></NavSearch>
                         </CSSTransition>
-                        <i className={this.state.focused ? 'focused iconfont' : 'iconfont'}>
+                        <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>
                             &#xe614;
                         </i>
                     </SearchWrapper>
@@ -60,29 +75,6 @@ class Header extends Component {
             </HeaderWrapper>
         )
     }
-    handleInputFocus(){
-        this.setState({
-            focused: true
-        })
-    }
-    handleInputBlur(){
-        this.setState({
-            focused: false
-        })
-    }
 }
-
-const mapStateToPorps = (state) => {
-    return {
-
-    }
-}
-
-const mapDispathToProps = (dispatch) => {
-    return {
-
-    }
-}
-
 
 export default Header;
