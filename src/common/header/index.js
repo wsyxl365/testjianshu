@@ -10,7 +10,10 @@ import {
     Button,
     SearchWrapper
 } from "./style";
-class Hearder extends Component {
+import { connect } from "react-redux"; //建立和store的连接
+
+@connect(mapStateToPorps,mapDispathToProps)
+class Header extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -69,4 +72,17 @@ class Hearder extends Component {
     }
 }
 
-export default Hearder;
+const mapStateToPorps = (state) => {
+    return {
+
+    }
+}
+
+const mapDispathToProps = (dispatch) => {
+    return {
+
+    }
+}
+
+
+export default Header;
