@@ -14,11 +14,11 @@ import { connect } from "react-redux"; //建立和store的连接
 
 const mapStateToProps = (state) => {
     return {
-        focused:state.focused
+        focused:state.header.focused
     }
 }
 
-const mapDispathToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         handleInputFocus(){
             const action = {
@@ -35,7 +35,7 @@ const mapDispathToProps = (dispatch) => {
     }
 }
 
-@connect(mapStateToProps,mapDispathToProps)
+@connect(mapStateToProps,mapDispatchToProps)
 class Header extends Component {
     render(){
         return (
@@ -58,7 +58,7 @@ class Header extends Component {
                                 className={this.props.focused ? 'focused' : ''}
                                 onFocus={this.props.handleInputFocus}
                                 onBlur={this.props.handleInputBlur}
-                            ></NavSearch>
+                            />
                         </CSSTransition>
                         <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>
                             &#xe614;
