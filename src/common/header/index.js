@@ -9,13 +9,18 @@ import {
     NavSearch,
     Addition,
     Button,
-    SearchWrapper
+    SearchWrapper,
+    SearchInfo,
+    SearchInfoTitle,
+    SearchInfoSwitch,
+    SearchInfoItem
 } from "./style";
 import { connect } from "react-redux"; //建立和store的连接
 
 const mapStateToProps = (state) => {
     return {
-        focused: state.getIn(['header', 'focused'])
+        focused: state.getIn(['header', 'focused']),
+        list: state.getIn(['header', 'list'])
             //state.get("header").get('focused')
     }
 }
@@ -23,8 +28,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         handleInputFocus(){
-            const action = actionCreators.searchFocus();
-            dispatch(action);
+            dispatch(actionCreators.getList());
+            dispatch(actionCreators.searchFocus());
         },
         handleInputBlur(){
             const action = actionCreators.searchBlur();
@@ -35,7 +40,35 @@ const mapDispatchToProps = (dispatch) => {
 
 @connect(mapStateToProps,mapDispatchToProps)
 class Header extends Component {
+    /**
+     * 热门搜索函数
+     * @param show
+     * @returns {*}
+     */
+    getListArea = ()=>{
+        const { focused, list } = this.props;
+        if(focused) {
+            return (<SearchInfo>
+                <SearchInfoTitle>
+                    热门搜索
+                    <SearchInfoSwitch>换一批</SearchInfoSwitch>
+                </SearchInfoTitle>
+                <div>
+                    {
+                        list.map((item, index)=>{
+                            return (<SearchInfoItem key={item} >
+                                {item}
+                            </SearchInfoItem>)
+                        })
+                    }
+                </div>
+            </SearchInfo>)
+        } else {
+            return null;
+        }
+    }
     render(){
+        const { focused, handleInputFocus, handleInputBlur } = this.props;
         return (
             <HeaderWrapper>
                 <Logo />
@@ -48,19 +81,20 @@ class Header extends Component {
                     </NavItem>
                     <SearchWrapper>
                         <CSSTransition
-                            in={this.props.focused}
+                            in={focused}
                             timeout={200}
                             classNames="slide"
                         >
                             <NavSearch
-                                className={this.props.focused ? 'focused' : ''}
-                                onFocus={this.props.handleInputFocus}
-                                onBlur={this.props.handleInputBlur}
+                                className={focused ? 'focused' : ''}
+                                onFocus={ handleInputFocus }
+                                onBlur={ handleInputBlur }
                             />
                         </CSSTransition>
-                        <i className={this.props.focused ? 'focused iconfont' : 'iconfont'}>
+                        <i className={ focused ? 'focused iconfont' : 'iconfont'}>
                             &#xe614;
                         </i>
+                        { this.getListArea() }
                     </SearchWrapper>
                 </Nav>
                 <Addition>

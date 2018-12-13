@@ -102,6 +102,39 @@ export const NavSearch = stlyed.input.attrs({
     }
 `;
 
+export const SearchInfo = stlyed.div`
+    position: absolute;
+    top: 56px;
+    width: 240px;
+    // height: 100px;
+    padding: 0 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+`;
+
+export const SearchInfoTitle = stlyed.div`
+    margin-top: 20px;
+    margin-bottom: 15px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #969696;
+`;
+
+export const SearchInfoSwitch = stlyed.span`
+    float: right;
+    font-size: 14px;
+`;
+
+export const SearchInfoItem = stlyed.a`
+    margin-right: 10px;
+    margin-bottom: 15px;
+    float:left;
+    line-height: 20px;
+    padding:0 5px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    color: #787878;
+`;
 
 export const Addition = stlyed.div`
     position: absolute;
@@ -127,3 +160,4 @@ export const Button = stlyed.div`
         background: #ec6149
     }
 `;
+
